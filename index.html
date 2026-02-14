@@ -5,226 +5,101 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Eterspire Optimizer</title>
+<title>Eterspire Optimizer — God Mode</title>
 
 <link rel="stylesheet" href="styles.css">
-
-<style>
-
-body{
-font-family: Arial;
-background:#0f172a;
-color:white;
-padding:20px;
-}
-
-.container{
-max-width:1200px;
-margin:auto;
-}
-
-.card{
-background:#1e293b;
-padding:20px;
-margin-bottom:20px;
-border-radius:10px;
-}
-
-button{
-
-background:#3b82f6;
-border:none;
-padding:10px;
-color:white;
-cursor:pointer;
-margin-top:10px;
-width:100%;
-}
-
-select,input{
-
-width:100%;
-padding:10px;
-margin-top:5px;
-margin-bottom:10px;
-}
-
-.result{
-
-font-size:20px;
-margin-top:10px;
-color:#22c55e;
-
-}
-
-</style>
 
 </head>
 
 <body>
 
-<div class="container">
+<header>
 
-<h1>Eterspire God Mode Optimizer</h1>
+<h1>Eterspire Optimizer</h1>
 
-<div class="card">
+<p class="subtitle">
+God Mode Build Calculator
+</p>
+
+</header>
+
+<main>
+
+<section class="card">
 
 <h2>Optimizer</h2>
 
-<label>Level</label>
+<label>Character Level</label>
 
-<input id="level" type="number" value="1">
+<input type="number" id="level" value="1">
 
-<button onclick="optimize()">
-
-Find Best Build
-
+<button onclick="runOptimizer()">
+Optimize Best Build
 </button>
 
-<div class="result" id="optResult">
+<div id="optimizerResult"></div>
 
-</div>
+</section>
 
-</div>
-
-<div class="card">
+<section class="card">
 
 <h2>Simulator</h2>
 
 <label>Weapon</label>
-
 <select id="weapon"></select>
 
 <label>Armor</label>
-
 <select id="armor"></select>
 
 <label>Ring</label>
-
 <select id="ring"></select>
 
-<button onclick="simulate()">
-
-Simulate DPS
-
+<button onclick="runSimulation()">
+Calculate DPS
 </button>
 
-<div class="result" id="simResult">
+<div id="simResult"></div>
 
-</div>
+</section>
 
-</div>
+<section class="card">
 
-</div>
+<h2>Search Items</h2>
 
-<script>
+<input
+type="text"
+id="searchBox"
+placeholder="Search items..."
+oninput="searchItems()"
+>
 
-let items=[]
+<div id="searchResults"></div>
 
-fetch("data/items.json")
+</section>
 
-.then(r=>r.json())
+<section class="card">
 
-.then(data=>{
+<h2>Export Build</h2>
 
-items=data
+<button onclick="exportJSON()">
+Export JSON
+</button>
 
-loadItems()
+<button onclick="exportCSV()">
+Export CSV
+</button>
 
-})
+</section>
 
-function loadItems(){
+</main>
 
-let weapon=document.getElementById("weapon")
+<footer>
 
-let armor=document.getElementById("armor")
+God Mode Optimizer
 
-let ring=document.getElementById("ring")
+</footer>
 
-items.forEach(item=>{
-
-let option=document.createElement("option")
-
-option.value=item.attack
-
-option.text=item.name
-
-if(item.slot=="weapon")
-
-weapon.append(option)
-
-if(item.slot=="armor")
-
-armor.append(option)
-
-if(item.slot=="ring")
-
-ring.append(option)
-
-})
-
-}
-
-function simulate(){
-
-let weapon=
-
-Number(document.getElementById("weapon").value)
-
-let armor=
-
-Number(document.getElementById("armor").value)
-
-let ring=
-
-Number(document.getElementById("ring").value)
-
-let total=
-
-weapon+armor+ring
-
-document.getElementById("simResult")
-
-.innerText="Total Power: "+total
-
-}
-
-function optimize(){
-
-let level=
-
-Number(document.getElementById("level").value)
-
-let best=0
-let bestName=""
-
-items.forEach(item=>{
-
-if(item.level<=level){
-
-if(item.attack>best){
-
-best=item.attack
-
-bestName=item.name
-
-}
-
-}
-
-})
-
-document.getElementById("optResult")
-
-.innerText=
-
-"Best Item: "+bestName+" Power: "+best
-
-}
-
-</script>
+<script src="app.js"></script>
 
 </body>
-
 </html>
-
