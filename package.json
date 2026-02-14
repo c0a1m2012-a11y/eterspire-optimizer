@@ -1,6 +1,9 @@
 {
-  "name": "eterspire-god-mode",
-  "version": "1.0.0",
+  "name":"eterspire-optimizer",
+  "version":"1.0.0",
+  "dependencies":{
+  "axios":"^1.6.0",
+  "cheerio":"^1.0.0"
   "private": true,
   "scripts": {
     "dev": "node server.js",
